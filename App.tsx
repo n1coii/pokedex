@@ -20,4 +20,24 @@ export default function App() {
       </SafeAreaProvider>
     );
   }
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#000',
+    },
+    welcome: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 10,
+    },
+    instructions: {
+      textAlign: 'center',
+      color: '#333333',
+      marginBottom: 5,
+    },
+    pokeListHeader: {
+      fontSize: 20,
+      color: '#fff'
+    }
+  });
 }

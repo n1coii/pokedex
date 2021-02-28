@@ -2,6 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import PokeList from '../components/pokeList';
+import PokemonInfo from '../components/pokemonInfo';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -16,17 +18,17 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="PokemonsTab"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Pokemons"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Favorites"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -51,12 +53,20 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        // component={TabOneScreen}
+        component={PokeList}
+        options={{ headerTitle: 'Pokemons' }}
       />
+      <TabOneStack.Screen
+      name="PokemonInfo"
+      component={PokemonInfo}
+      options={ ({route}) => ({ headerTitle: route.params.name })}
+      />
+
     </TabOneStack.Navigator>
   );
 }
+
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
