@@ -2,6 +2,10 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+      },
     listItemContainer: {
         borderStyle: 'solid',
         borderColor: '#fff',
@@ -18,6 +22,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         height: 50,
         width: 50
+    },
+    pokemonImage: {
+        height: 250,
+        width: 250
+    },
+    nameOfPokemon: {
+        fontSize: 25
+    },
+    pokeInfoListTitle: {
+        fontSize: 20,
+        padding: 20
     }
 })
 

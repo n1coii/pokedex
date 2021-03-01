@@ -1,35 +1,60 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect, useState } from 'react';
 //import UI from react-native
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ActivityIndicator, FlatList, SectionList } from 'react-native';
 //import styles for component.
 import styles from './styles';
 
-// class PokemonInfo extends PureComponent {
-//     //Define your navigationOptions as a functino to have access to navigation properties, since it is static.
-//     static navigationOptions = ({navigation}) => ({
-//         //Use getParam function to get a value, also set a default value if it undefined.
-//         title: `${navigation.getParam('name')} Info`
-//     })
-//     //Define your class component
-//     render() {
-//         const { navigation } = this.props;
-//         return (
-//             <View style={styles.container}>
-//                 <Image source={{uri: 'https://res.cloudinary.com/aa1997/image/upload/v1535930682/pokeball-image.jpg'}}
-//                         style={styles.pokemonImage} />
-//                 <Text style={styles.nameOfPokemon}>{navigation.getParam('name')}</Text>
-//             </View>
-//         );
-//     }
-// }
+const PokemonInfo = ({ route, navigation }) => {
+    const {name, url} = route.params;
+    const [poke, setPoke] = useState();
+    const [loading, setLoading] = useState(true);
+    const [pokeTypes, setPokeTypes] = useState([]);
+    // let DATA = [poke.types, poke.moves];
 
-
-function PokemonInfo({ navigation }) {
+    useEffect(() => {
+        fetch('https://pokeapi.co/api/v2/pokemon/1/')
+          .then((response) => response.json())
+        //   .then(response => console.log("RESPONSE: ", response))
+          .then((response) => setPoke(response))
+        //   .then((poke) => setPokeTypes(poke.types))
+        //   .then((json) => console.log("JSON: ",json))
+          .catch((error) => console.error(error))
+          .finally(() => setLoading(false));
+      }, []);
+    //   console.log("Poke:", poke)
     return (
         <View style={styles.container}>
-            <Image source={{ uri: 'https://res.cloudinary.com/aa1997/image/upload/v1535930682/pokeball-image.jpg' }}
-                style={styles.pokemonImage} />
-            {/* <Text style={styles.nameOfPokemon}>{navigation.getParam('name')}</Text> */}
+        {loading ? <ActivityIndicator/> : (
+            <>
+                <Image source={{ uri: poke.sprites.front_default }}
+                        style={styles.pokemonImage} />
+                <Text style={styles.nameOfPokemon}>{name}</Text>
+                <FlatList
+                    numColumns={2}
+                    data={poke.types}
+                    renderItem={({ item }) => {
+                        return (
+                            <Text>{item.type.name}</Text>
+                        )
+                    }}
+                    ListHeaderComponent={() => <Text style={styles.pokeInfoListTitle}>Types</Text>}
+                    stickyHeaderIndices={[0]}
+                    keyExtractor={(item, index) => item + index}
+                />
+                <FlatList
+                    numColumns={2}
+                    data={poke.moves}
+                    renderItem={({ item }) => {
+                        return (
+                            <Text>{item.move.name}</Text>
+                        )
+                    }}
+                    ListHeaderComponent={() => <Text style={styles.pokeInfoListTitle}>Moves</Text>}
+                    stickyHeaderIndices={[0]}
+                    keyExtractor={(item, index) => item + index}
+                />
+            </>
+        )}
         </View>
     );
 

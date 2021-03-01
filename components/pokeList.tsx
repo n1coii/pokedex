@@ -22,7 +22,7 @@ const PokeList = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/')
+        fetch('https://pokeapi.co/api/v2/pokemon/?limit=200')
           .then((response) => response.json())
           .then((json) => setPokeList(json.results))
           .catch((error) => console.error(error))
@@ -38,6 +38,7 @@ const PokeList = ({ navigation }) => {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
                 <PokeCard {...item} navigation={navigation}/>
+                // <Text>{item.name}</Text>
             )}
           />
         )}
