@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
     pokeInfoListTitle: {
         fontSize: 20,
         padding: 20
+    },
+    pokeInfoListItem: {
+        padding: 10
     }
 })
 

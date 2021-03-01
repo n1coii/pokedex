@@ -1,6 +1,6 @@
 import React, { PureComponent, useEffect, useState } from 'react';
 //import UI from react-native
-import { View, Text, Image, ActivityIndicator, FlatList, SectionList } from 'react-native';
+import { View, Text, Image, ActivityIndicator, FlatList, SectionList, ScrollView } from 'react-native';
 //import styles for component.
 import styles from './styles';
 
@@ -25,16 +25,16 @@ const PokemonInfo = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
         {loading ? <ActivityIndicator/> : (
-            <>
+            <ScrollView>
                 <Image source={{ uri: poke.sprites.front_default }}
                         style={styles.pokemonImage} />
-                <Text style={styles.nameOfPokemon}>{name}</Text>
+                {/* <Text style={styles.nameOfPokemon}>{name}</Text> */}
                 <FlatList
                     numColumns={2}
                     data={poke.types}
                     renderItem={({ item }) => {
                         return (
-                            <Text>{item.type.name}</Text>
+                            <Text style={styles.pokeInfoListItem}>{item.type.name}</Text>
                         )
                     }}
                     ListHeaderComponent={() => <Text style={styles.pokeInfoListTitle}>Types</Text>}
@@ -46,14 +46,14 @@ const PokemonInfo = ({ route, navigation }) => {
                     data={poke.moves}
                     renderItem={({ item }) => {
                         return (
-                            <Text>{item.move.name}</Text>
+                            <Text style={styles.pokeInfoListItem}>{item.move.name}</Text>
                         )
                     }}
                     ListHeaderComponent={() => <Text style={styles.pokeInfoListTitle}>Moves</Text>}
                     stickyHeaderIndices={[0]}
                     keyExtractor={(item, index) => item + index}
                 />
-            </>
+            </ScrollView>
         )}
         </View>
     );
