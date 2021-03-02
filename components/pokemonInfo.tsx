@@ -4,6 +4,9 @@ import { View, Text, Image, ActivityIndicator, FlatList, SectionList, ScrollView
 //import styles for component.
 import styles from './styles';
 import { addToFavorites, useFavorites, FavoritesContext, AddFavoriteButton } from '../hooks/FavoritesContext' 
+import { LogBox } from 'react-native';
+
+LogBox.ignoreWarnings(['VirtualizedLists should never be nested']);
 
 const PokemonInfo = ({ route, navigation }) => {
     const {name, url} = route.params;
@@ -11,29 +14,22 @@ const PokemonInfo = ({ route, navigation }) => {
     const [loading, setLoading] = useState(true);
     const [pokeTypes, setPokeTypes] = useState([]);
     const {favorites, addToFavorites} = useFavorites();
-    // let DATA = [poke.types, poke.moves];
 
     useEffect(() => {
         fetch(url)
           .then((response) => response.json())
-        //   .then(response => console.log("RESPONSE: ", response))
           .then((response) => setPoke(response))
-        //   .then((poke) => setPokeTypes(poke.types))
-        //   .then((json) => console.log("JSON: ",json))
           .catch((error) => console.error(error))
           .finally(() => setLoading(false));
       }, []);
 
       const addFavorite = () => {
-          console.log(favorites)
           addToFavorites({name, url});
       }
-    //   console.log("Poke:", poke)
     return (
         <View style={styles.container}>
         {loading ? <ActivityIndicator/> : (
             <ScrollView >
-                {/* <AddFavoriteButton /> */}
             <Button
             onPress={addFavorite}
             styles={styles.addButton}

@@ -10,11 +10,8 @@ export function FavoritesProvider({ children }) {
 const [favorites, setFavorites] = useState([])
 
 const addToFavorites = (item) => {
-    // let newFavorites = favorites;
-    // newFavorites.push(item)
     let newFavorites = favorites;
     newFavorites.push(item);
-    console.log("FAvorites before updaet:", favorites)
     setFavorites(newFavorites)
 }
 
@@ -31,12 +28,3 @@ export function useFavorites() {
 
 export const FavoritesConsumer = FavoritesContext.Consumer;
 
-// export const AddFavoriteButton = (item) => {
-//     const {favorites, setFavorites} = useContext(FavoritesContext);
-//     return (
-//         <Button 
-//         onPress={() => setFavorites(item + favorites)}
-
-//         />
-//     )
-// }

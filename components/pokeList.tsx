@@ -47,7 +47,7 @@ const PokeList = ({ navigation }) => {
         {loading ? <ActivityIndicator/> : (
           <FlatList
             data={pokeList}
-            keyExtractor={({ id }, index) => id}
+            keyExtractor={({ id }) => id}
             renderItem={({ item }) => (
                 <PokeCard {...item} navigation={navigation}/>
             )}

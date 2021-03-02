@@ -8,30 +8,13 @@ import { View } from './Themed';
 
 
 const FavoritesList = ({ navigation }) => {
-    // const {name, url} = route.params;
     const [poke, setPoke] = useState();
     const [loading, setLoading] = useState(true);
     const [pokeTypes, setPokeTypes] = useState([]);
     const {favorites, addToFavorites} = useFavorites();
-    console.log("Favorites in LIST: ", favorites)
-    // let DATA = [poke.types, poke.moves];
 
-    // useEffect(() => {
-    //     fetch(url)
-    //       .then((response) => response.json())
-    //     //   .then(response => console.log("RESPONSE: ", response))
-    //       .then((response) => setPoke(response))
-    //     //   .then((poke) => setPokeTypes(poke.types))
-    //     //   .then((json) => console.log("JSON: ",json))
-    //       .catch((error) => console.error(error))
-    //       .finally(() => setLoading(false));
-    //   }, []);
-    //   const addFavorite = () => {
-    //       addToFavorites(poke);
-    //   }
     return (
-        // <View style={ styles.pokemonList }>
-        // {/* {loading ? <ActivityIndicator/> : ( */}
+        <View style={ styles.pokemonList }>
           <FlatList
             style={styles.pokemonList}
             data={favorites}
@@ -39,12 +22,8 @@ const FavoritesList = ({ navigation }) => {
             renderItem={({ item }) => (
                 <PokeCard {...item} navigation={navigation}/>
             )}
-            // onEndReachedThreshold={0}
-            // onEndReached={fetchAllPokemons}
-
             />
-        //   {/* )} */}
-    //   </View>
+      </View>
     )
             }
 export default FavoritesList;
