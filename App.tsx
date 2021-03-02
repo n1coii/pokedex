@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { FavoritesProvider } from './hooks/FavoritesContext';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
@@ -10,13 +11,18 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
+  // const [appFavorites, setAppFavorites] = useState([]);
+  // const favorites = {appFavorites, setAppFavorites};
+
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <FavoritesProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </FavoritesProvider>
       </SafeAreaProvider>
     );
   }

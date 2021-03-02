@@ -1,14 +1,16 @@
-import React, { PureComponent, useEffect, useState } from 'react';
+import React, { PureComponent, useContext, useEffect, useState } from 'react';
 //import UI from react-native
-import { View, Text, Image, ActivityIndicator, FlatList, SectionList, ScrollView } from 'react-native';
+import { View, Text, Image, ActivityIndicator, FlatList, SectionList, ScrollView, Button } from 'react-native';
 //import styles for component.
 import styles from './styles';
+import { addToFavorites, useFavorites, FavoritesContext, AddFavoriteButton } from '../hooks/FavoritesContext' 
 
 const PokemonInfo = ({ route, navigation }) => {
     const {name, url} = route.params;
     const [poke, setPoke] = useState();
     const [loading, setLoading] = useState(true);
     const [pokeTypes, setPokeTypes] = useState([]);
+    const {favorites, addToFavorites} = useFavorites();
     // let DATA = [poke.types, poke.moves];
 
     useEffect(() => {
@@ -21,11 +23,22 @@ const PokemonInfo = ({ route, navigation }) => {
           .catch((error) => console.error(error))
           .finally(() => setLoading(false));
       }, []);
+
+      const addFavorite = () => {
+          console.log(favorites)
+          addToFavorites({name, url});
+      }
     //   console.log("Poke:", poke)
     return (
         <View style={styles.container}>
         {loading ? <ActivityIndicator/> : (
             <ScrollView >
+                {/* <AddFavoriteButton /> */}
+            <Button
+            onPress={addFavorite}
+            styles={styles.addButton}
+            title="Add to favorites"
+            /> 
                 <Image source={{ uri: poke.sprites.front_default }}
                         style={styles.pokemonImage} />
                 <FlatList

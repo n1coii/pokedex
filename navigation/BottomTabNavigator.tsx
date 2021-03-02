@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import FavoritesList from '../components/favoritesList';
 import PokeList from '../components/pokeList';
 import PokemonInfo from '../components/pokemonInfo';
 
@@ -56,7 +57,6 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        // component={TabOneScreen}
         component={PokeList}
         options={{ headerTitle: 'Pokemons' }}
       />
@@ -77,9 +77,14 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        name="Favorites"
+        component={FavoritesList}
+        options={{ headerTitle: 'Favorites' }}
+      />
+      <TabTwoStack.Screen
+      name="PokemonInfo"
+      component={PokemonInfo}
+      options={ ({route}) => ({ headerTitle: route.params.name })}
       />
     </TabTwoStack.Navigator>
   );

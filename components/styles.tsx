@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
     },
     pokemonList: {
         backgroundColor: "white",
+    },
+    addButton: {
+        alignSelf: "flex-end",
     }
 })
 
