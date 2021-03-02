@@ -20,28 +20,42 @@ import styles from "./styles";
 const PokeList = ({ navigation }) => {
     const [pokeList, setPokeList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
-        fetch('https://pokeapi.co/api/v2/pokemon/?limit=200')
+        fetch('https://pokeapi.co/api/v2/pokemon/')
+          .then((response) => response.json())
+          .then((response) => setCount(response.count))
+          .catch((error) => console.error(error))
+          .finally(() => fetchAllPokemons())
+          .finally(() => setLoading(false))
+
+      }, []);
+    
+    const fetchAllPokemons = () => {
+      setLoading(true);
+      console.log(pokeList)
+        fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${count}`)
           .then((response) => response.json())
           .then((json) => setPokeList(json.results))
           .catch((error) => console.error(error))
           .finally(() => setLoading(false));
-      }, []);
-    
+      };
 
     return (
-        <View style={{ flex: 1, padding: 24 }}>
+        <View style={ styles.pokemonList }>
         {loading ? <ActivityIndicator/> : (
           <FlatList
             data={pokeList}
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
                 <PokeCard {...item} navigation={navigation}/>
-                // <Text>{item.name}</Text>
             )}
-          />
-        )}
+            onEndReachedThreshold={0}
+            onEndReached={fetchAllPokemons}
+
+            />
+          )}
       </View>
     );
 };

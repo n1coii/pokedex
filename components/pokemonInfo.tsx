@@ -25,11 +25,11 @@ const PokemonInfo = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
         {loading ? <ActivityIndicator/> : (
-            <ScrollView>
+            <ScrollView >
                 <Image source={{ uri: poke.sprites.front_default }}
                         style={styles.pokemonImage} />
-                {/* <Text style={styles.nameOfPokemon}>{name}</Text> */}
                 <FlatList
+                    styles={styles.listItemContainer}
                     numColumns={2}
                     data={poke.types}
                     renderItem={({ item }) => {
